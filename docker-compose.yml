@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  task-management:
+    build:
+      context: .
+      target: development 
+    container_name: task-management
+    networks: 
+      - web
+      - psql_database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.task-management.rule=Host(`task.localhost`)"
+      - "traefik.http.routers.task-management.entrypoints=web"
+      - "traefik.http.services.task-management.loadbalancer.server.port=3000"
+      - "traefik.docker.network=web"
+
+networks: 
+  web:
+    external: true
+  psql_database:
+    external: true
