@@ -1,30 +1,24 @@
 FROM node:12.20-alpine AS development
 
+ENV NODE_ENV build
+
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY . /usr/src/app
 
-RUN npm install --only=development
-
-COPY . .
-
-RUN npm run build
+RUN npm ci \
+    && npm run build
 
 FROM node:12.20-alpine AS production
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}}
+ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY --from=development /usr/src/app/package*.json /usr/src/app
+COPY --from=development /usr/src/app/dist/ /usr/src/app/dist/
 
-RUN npm install --only=production
-
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-# EXPOSE 3000
+RUN npm ci
 
 CMD [ "node", "dist/main" ]
+# EXPOSE 3000
