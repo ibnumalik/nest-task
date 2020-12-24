@@ -1,8 +1,8 @@
 {
   "name": "nest-task",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Task management app built with Nest",
+  "author": "ibnumalik",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -32,6 +32,7 @@
     "bcrypt": "^5.0.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
+    "config": "^3.3.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pg": "^8.5.1",
@@ -40,6 +41,7 @@
     "typeorm": "^0.2.29"
   },
   "devDependencies": {
+    "@types/config": "0.0.37",
     "rimraf": "^3.0.2",
     "@nestjs/cli": "^7.5.1",
     "@nestjs/schematics": "^7.1.3",
